@@ -114,9 +114,51 @@ function finishCapture(){
   if (stream){ stream.getTracks().forEach(t => t.stop()); stream = null; }
 }
 
-/* ---------- 撮影する ---------- */
-const countdownEl = document.getElementById('countdown');   // ★ ファイル先頭の const 群に追加してもOK// ★ 撮影そのものは関数に切り出すfunction takePhoto(){  const ctx = photoCanvas.getContext('2d');  photoCanvas.width  = camera.videoWidth;  photoCanvas.height = camera.videoHeight;  ctx.drawImage(camera, 0, 0, photoCanvas.width, photoCanvas.height);  finishCapture();}shutterBtn.addEventListener('click', () => {  if (!camera.videoWidth){    alert('カメラが使えないようです。「写真をアップロード」から画像を選んでね。');    return;  }  let count = 3;                         // ★ カウントダウンの秒数  shutterBtn.disabled = true;            // 連打できないようにする  countdownEl.textContent = count;  countdownEl.hidden = false;  const timer = setInterval(() => {      // ★ 1秒ごとに実行    count--;    if (count > 0){      countdownEl.textContent = count;    } else {      clearInterval(timer);              // タイマーを止める      countdownEl.hidden = true;      shutterBtn.disabled = false;      takePhoto();                       // 0になったら撮影    }  }, 1000);});
 
+/* ---------- 撮影する ---------- */
+const countdownEl = document.getElementById('countdown');
+
+function takePhoto() {
+  const ctx = photoCanvas.getContext('2d');
+
+  photoCanvas.width = camera.videoWidth;
+  photoCanvas.height = camera.videoHeight;
+
+  ctx.drawImage(
+    camera,
+    0,
+    0,
+    photoCanvas.width,
+    photoCanvas.height
+  );
+
+  finishCapture();
+}
+
+shutterBtn.addEventListener('click', () => {
+  if (!camera.videoWidth) {
+    alert('カメラがまだ準備できていません。少し待ってね。');
+    return;
+  }
+
+  let count = 3;
+  shutterBtn.disabled = true;
+  countdownEl.textContent = count;
+  countdownEl.hidden = false;
+
+  const timer = setInterval(() => {
+    count--;
+
+    if (count > 0) {
+      countdownEl.textContent = count;
+    } else {
+      clearInterval(timer);
+      countdownEl.hidden = true;
+      shutterBtn.disabled = false;
+      takePhoto();
+    }
+  }, 1000);
+});
 /* ---------- 写真をアップロードする ----------
    選んだ画像は、ステージと同じ 4:3 になるよう中央を切り抜いて読み込みます
    (object-fit: cover と同じ考え方)。
