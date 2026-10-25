@@ -474,7 +474,6 @@ saveBtn.addEventListener('click', () => {
 
 const beautySlider = document.getElementById("beautySlider");
 const beautyLevel = document.getElementById("beautyLevel");
-const stage = document.getElementById("stage");
 
 function updateBeautyFilter() {
   const value = Number(beautySlider.value);
