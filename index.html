@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>写真デコメーカー</title>
+  <link href="https://fonts.googleapis.com/css2?family=Yomogi&family=Kiwi+Maru:wght@400;500&display=swap" rel="stylesheet">
+
+
+<!-- Google Fonts (Birthstone Bounce + Merriweather) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Birthstone+Bounce:wght@400;500&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="app-header">
+<h1> MY PHOTO BOOTH</h1><p class="sub">make my photo</p>
+    <p class="sub">🫧📸🤍</p>
+  </header>
+
+  <main class="layout">
+
+    <!-- 撮影エリア -->
+    <section class="booth">
+      <div id="stage" class="stage frame-pink">
+        <video id="camera" autoplay playsinline muted></video>
+        <p id="cameraError" class="error" hidden>
+          カメラを使えませんでした。<br>「写真をアップロード」から画像を選ぶこともできます。
+        </p>
+        <canvas id="photoCanvas" hidden></canvas>
+        <img id="frameOverlay" class="frame-overlay" alt="" hidden>
+        <canvas id="drawCanvas" class="draw-canvas"></canvas><div id="countdown" class="countdown" hidden></div>   <!-- ★追加 --><!-- ここに JS がシール(sticker)の div を追加していきます -->
+      </div>
+
+      <div class="booth-controls">
+        
+<div class="beauty-panel">
+  <h2>🎀 美顔フィルター</h2>
+  <div class="beauty-labels">
+    <span>🤍 ナチュラル</span>
+    <span>🩷 プリクラ級</span>
+  </div>
+  <input
+    type="range"
+    id="beautySlider"
+    min="0"
+    max="100"
+    value="0"
+  >
+  <p id="beautyLevel">ナチュラル ✨</p>
+</div>
+
+        <div id="captureControls" class="capture-controls">
+          <button id="shutterBtn" class="btn btn-primary">📸 撮影する</button>
+          <label for="uploadInput" class="btn btn-upload">🖼️ 写真をアップロード</label>
+          <input type="file" id="uploadInput" accept="image/*" hidden>
+        </div>
+        <button id="retakeBtn" class="btn" hidden>🔄 撮り直す</button>
+      </div>
+    </section>
+
+    <!-- アレンジパネル -->
+    <aside class="panel">
+      <div class="panel-block">
+        <h2>フレームを選ぶ</h2>
+        <!-- ボタンは script.js の FRAME_ITEMS 配列から自動で作られます。
+             色フレームに加えて、画像URLのフレーム(枠の画像)も追加できます。 -->
+        <div id="frameSwatches" class="swatches"></div>
+      </div>
+
+      <div class="panel-block">
+        <h2>シールを貼る</h2>
+        <!-- ボタンは script.js の STICKER_ITEMS 配列から自動で作られます。
+             絵文字シールに加えて、画像URLのシールも追加できます。 -->
+        <div id="stickerTray" class="sticker-tray"></div>
+        <p class="hint">シールをタップすると写真の真ん中に貼られます。ドラッグして位置を調整できます。</p>
+      </div>
+
+      <div class="panel-block">
+        <h2>ペンで書く</h2>
+        <button id="penToggleBtn" class="btn">✏️ ペンモード</button>
+
+ <div id="penColors" class="swatches" style="margin-top:10px;">  <button class="swatch" data-color="#22223B" style="--sw:#22223B" aria-label="黒"></button>  <button class="swatch" data-color="#FF3D81" style="--sw:#FF3D81" aria-label="ピンク"></button>  <button class="swatch" data-color="#3DDBFF" style="--sw:#3DDBFF" aria-label="シアン"></button>  <button class="swatch" data-color="#FFE066" style="--sw:#FFE066" aria-label="イエロー"></button>  <button class="swatch" data-color="#FFFFFF" style="--sw:#FFFFFF" aria-label="白"></button>  <button class="swatch" data-color="#7CE8B4" style="--sw:#7CE8B4" aria-label="ミント"></button>   <!-- ★追加 -->  <button class="swatch" data-color="#B28DFF" style="--sw:#B28DFF" aria-label="パープル"></button> <!-- ★追加 --></div><div id="penSizes" class="pen-sizes">  <button class="pen-size-btn" data-size="3">細</button>  <button class="pen-size-btn active" data-size="6">中</button>  <button class="pen-size-btn" data-size="12">太</button>  <button class="pen-size-btn" data-size="24">極太</button> <!-- ★追加 --></div>
+
+        <button id="clearDrawBtn" class="btn" style="margin-top:10px;">🧽 描いたものを消す</button>
+      </div>
+
+      <div class="panel-block">
+        <button id="saveBtn" class="btn btn-save">💾 保存する</button>
+      </div>
+    </aside>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Waffle ワークショップ用テンプレート</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
